@@ -8,8 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import com.klayrocha.helpdesk.api.model.User;
 import com.klayrocha.helpdesk.api.repository.UserRepository;
-import com.klayrocha.helpdesk.api.security.entity.User;
 import com.klayrocha.helpdesk.api.service.UserService;
 
 @Component
@@ -26,11 +26,11 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.save(user);
 	}
 
-	public Optional<User>findById(String id) {
+	public Optional<User>findById(Long id) {
 		return this.userRepository.findById(id);
 	}
 
-	public void delete(String id) {
+	public void delete(Long id) {
 		this.userRepository.deleteById(id);
 	}
 

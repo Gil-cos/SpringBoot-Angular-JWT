@@ -1,6 +1,6 @@
 package com.klayrocha.helpdesk.api.security.model;
 
-import com.klayrocha.helpdesk.api.security.entity.User;
+import com.klayrocha.helpdesk.api.model.User;
 
 public class CurrentUser {
 	

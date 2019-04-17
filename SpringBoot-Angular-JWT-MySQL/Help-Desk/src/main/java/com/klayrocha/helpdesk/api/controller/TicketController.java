@@ -26,12 +26,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.klayrocha.helpdesk.api.dto.Summary;
+import com.klayrocha.helpdesk.api.enums.ProfileEnum;
+import com.klayrocha.helpdesk.api.enums.StatusEnum;
+import com.klayrocha.helpdesk.api.model.ChangeStatus;
+import com.klayrocha.helpdesk.api.model.Ticket;
+import com.klayrocha.helpdesk.api.model.User;
 import com.klayrocha.helpdesk.api.response.Response;
-import com.klayrocha.helpdesk.api.security.entity.ChangeStatus;
-import com.klayrocha.helpdesk.api.security.entity.Ticket;
-import com.klayrocha.helpdesk.api.security.entity.User;
-import com.klayrocha.helpdesk.api.security.enums.ProfileEnum;
-import com.klayrocha.helpdesk.api.security.enums.StatusEnum;
 import com.klayrocha.helpdesk.api.security.jwt.JwtTokenUtil;
 import com.klayrocha.helpdesk.api.service.TicketService;
 import com.klayrocha.helpdesk.api.service.UserService;
@@ -116,7 +116,7 @@ public class TicketController {
 
 	@GetMapping(value = "{id}")
 	@PreAuthorize("hasAnyRole('CUSTOMER','TECHNICIAN')")
-	public ResponseEntity<Response<Ticket>> findById(@PathVariable("id") String id) {
+	public ResponseEntity<Response<Ticket>> findById(@PathVariable("id") Long id) {
 
 		Response<Ticket> response = new Response<Ticket>();
 		Optional<Ticket> ticketOptional = ticketService.findById(id);
@@ -144,7 +144,7 @@ public class TicketController {
 
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('CUSTOMER')")
-	public ResponseEntity<Response<String>> delete(@PathVariable("id") String id) {
+	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id) {
 
 		Response<String> response = new Response<String>();
 		Optional<Ticket> ticketOptional = ticketService.findById(id);
@@ -220,7 +220,7 @@ public class TicketController {
 
 	@PutMapping(value = "/{id}/{status}")
 	@PreAuthorize("hasAnyRole('CUSTOMER','TECHNICIAN')")
-	public ResponseEntity<Response<Ticket>> changeStatus(@PathVariable("id") String id, @PathVariable("status") String status,
+	public ResponseEntity<Response<Ticket>> changeStatus(@PathVariable("id") Long id, @PathVariable("status") String status,
 			HttpServletRequest request, @RequestBody Ticket ticket, BindingResult result) {
 
 		Response<Ticket> response = new Response<Ticket>();
@@ -333,7 +333,7 @@ public class TicketController {
 		}
 	}
 
-	private void validateChangeStatus(String id, String status, BindingResult result) {
+	private void validateChangeStatus(Long id, String status, BindingResult result) {
 		if (id == null || id.equals("")) {
 			result.addError(new ObjectError("Ticket", "Id no information"));
 			return;

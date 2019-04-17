@@ -1,23 +1,28 @@
-package com.klayrocha.helpdesk.api.security.entity;
+package com.klayrocha.helpdesk.api.model;
 
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.klayrocha.helpdesk.api.security.enums.PriorityEnum;
-import com.klayrocha.helpdesk.api.security.enums.StatusEnum;
+import com.klayrocha.helpdesk.api.enums.PriorityEnum;
+import com.klayrocha.helpdesk.api.enums.StatusEnum;
 
-@Document
+@Entity
 public class Ticket {
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	@DBRef(lazy = true)
+	@ManyToOne
 	private User user;
 
 	private Date date;
@@ -30,21 +35,24 @@ public class Ticket {
 
 	private PriorityEnum priority;
 
-	@DBRef(lazy = true)
+	@ManyToOne
 	private User assignedUser;
 
 	private String description;
 
 	private String image;
-	
-	@Transient
-	private List<ChangeStatus> changes;
 
-	public String getId() {
+	@Transient
+	@ElementCollection(targetClass=ChangeStatus.class)
+	private List<ChangeStatus> changes;
+	
+	
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -128,4 +136,7 @@ public class Ticket {
 		this.changes = changes;
 	}
 
+	
+	
+	
 }

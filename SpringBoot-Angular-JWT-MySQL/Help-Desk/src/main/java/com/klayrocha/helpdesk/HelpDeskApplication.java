@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.klayrocha.helpdesk.api.enums.ProfileEnum;
+import com.klayrocha.helpdesk.api.model.User;
 import com.klayrocha.helpdesk.api.repository.UserRepository;
-import com.klayrocha.helpdesk.api.security.entity.User;
-import com.klayrocha.helpdesk.api.security.enums.ProfileEnum;
 
 
 @SpringBootApplication

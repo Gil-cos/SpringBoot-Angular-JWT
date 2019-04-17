@@ -8,10 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import com.klayrocha.helpdesk.api.model.ChangeStatus;
+import com.klayrocha.helpdesk.api.model.Ticket;
 import com.klayrocha.helpdesk.api.repository.ChangeStatusRepository;
 import com.klayrocha.helpdesk.api.repository.TicketRepository;
-import com.klayrocha.helpdesk.api.security.entity.ChangeStatus;
-import com.klayrocha.helpdesk.api.security.entity.Ticket;
 import com.klayrocha.helpdesk.api.service.TicketService;
 
 @Component
@@ -27,11 +27,11 @@ public class TicketServiceImpl implements TicketService {
 		return this.ticketRepository.save(ticket);
 	}
 
-	public Optional<Ticket> findById(String id) {
+	public Optional<Ticket> findById(Long id) {
 		return this.ticketRepository.findById(id);
 	}
 
-	public void delete(String id) {
+	public void delete(Long id) {
 		this.ticketRepository.deleteById(id);
 	}
 
@@ -44,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
 		return this.ticketRepository.findAll();
 	}
 	
-	public Page<Ticket> findByCurrentUser(int page, int count, String userId) {
+	public Page<Ticket> findByCurrentUser(int page, int count, Long userId) {
 		Pageable pages = PageRequest.of(page, count);
 		return this.ticketRepository.findByUserIdOrderByDateDesc(pages,userId);
 	}
@@ -53,7 +53,7 @@ public class TicketServiceImpl implements TicketService {
 		return this.changeStatusRepository.save(changeStatus);
 	}
 	
-	public Iterable<ChangeStatus> listChangeStatus(String ticketId) {
+	public Iterable<ChangeStatus> listChangeStatus(Long ticketId) {
 		return this.changeStatusRepository.findByTicketIdOrderByDateChangeStatusDesc(ticketId);
 	}
 	
@@ -65,7 +65,7 @@ public class TicketServiceImpl implements TicketService {
 	}
 	
 	public Page<Ticket> findByParametersAndCurrentUser(int page, int count,String title,String status,
-			String priority,String userId) {
+			String priority,Long userId) {
 		Pageable pages = PageRequest.of(page, count);
 		return this.ticketRepository.
 				findByTitleIgnoreCaseContainingAndStatusIgnoreCaseContainingAndPriorityIgnoreCaseContainingAndUserIdOrderByDateDesc(
@@ -78,10 +78,12 @@ public class TicketServiceImpl implements TicketService {
 	}
 	
 	public Page<Ticket> findByParametersAndAssignedUser(int page, int count,String title,String status,
-			String priority,String assignedUserId) {
+			String priority,Long assignedUserId) {
 		Pageable pages = PageRequest.of(page, count);
 		return this.ticketRepository.
 				findByTitleIgnoreCaseContainingAndStatusIgnoreCaseContainingAndPriorityIgnoreCaseContainingAndAssignedUserIdOrderByDateDesc(
 				title,status,priority,assignedUserId,pages);
 	}
+
+
 }

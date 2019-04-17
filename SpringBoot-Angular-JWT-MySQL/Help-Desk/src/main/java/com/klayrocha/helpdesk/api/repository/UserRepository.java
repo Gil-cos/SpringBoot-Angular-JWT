@@ -1,11 +1,17 @@
 package com.klayrocha.helpdesk.api.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import java.util.Optional;
 
-import com.klayrocha.helpdesk.api.security.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends MongoRepository<User, String> {
+import com.klayrocha.helpdesk.api.model.User;
+
+public interface UserRepository extends JpaRepository<User, String> {
 
 	User findByEmail(String email);
+
+	Optional<User> findById(Long id);
+
+	void deleteById(Long id);
 
 }

@@ -1,10 +1,10 @@
 package com.klayrocha.helpdesk.api.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.klayrocha.helpdesk.api.security.entity.ChangeStatus;
+import com.klayrocha.helpdesk.api.model.ChangeStatus;
 
-public interface ChangeStatusRepository extends MongoRepository<ChangeStatus, String> {
+public interface ChangeStatusRepository extends JpaRepository<ChangeStatus, String> {
 
-	Iterable<ChangeStatus> findByTicketIdOrderByDateChangeStatusDesc(String ticketId);
+	Iterable<ChangeStatus> findByTicketIdOrderByDateChangeStatusDesc(Long ticketId);
 }

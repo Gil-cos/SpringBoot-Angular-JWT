@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.klayrocha.helpdesk.api.model.User;
 import com.klayrocha.helpdesk.api.response.Response;
-import com.klayrocha.helpdesk.api.security.entity.User;
 import com.klayrocha.helpdesk.api.service.UserService;
 
 @RestController
@@ -95,7 +95,7 @@ public class UserController {
 
 	@GetMapping(value = "{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<User>> findById(@PathVariable("id") String id) {
+	public ResponseEntity<Response<User>> findById(@PathVariable("id") Long id) {
 		
 		Response<User> response = new Response<User>();
 		Optional<User> userOptional = userService.findById(id);
@@ -112,7 +112,7 @@ public class UserController {
 
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Response<String>> delete(@PathVariable("id") String id) {
+	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id) {
 		
 		Response<String> response = new Response<String>();
 		Optional<User> userOptional = userService.findById(id);

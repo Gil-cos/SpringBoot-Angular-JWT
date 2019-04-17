@@ -1,4 +1,4 @@
-package com.klayrocha.helpdesk.api.security.enums;
+package com.klayrocha.helpdesk.api.enums;
 
 public enum PriorityEnum {
 	High,
