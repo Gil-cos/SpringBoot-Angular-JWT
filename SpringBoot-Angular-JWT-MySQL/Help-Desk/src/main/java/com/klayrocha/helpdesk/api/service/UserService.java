@@ -11,12 +11,12 @@ import com.klayrocha.helpdesk.api.model.User;
 public interface UserService {
 
 	User findByEmail(String email);
-	
+
 	User createOrUpdate(User user);
-	
+
 	Optional<User> findById(Long id);
-	
+
 	void delete(Long id);
-	
+
 	Page<User> findAll(int page, int count);
 }

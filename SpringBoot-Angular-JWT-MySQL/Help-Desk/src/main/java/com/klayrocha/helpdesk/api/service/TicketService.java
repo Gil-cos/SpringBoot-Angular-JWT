@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import com.klayrocha.helpdesk.api.enums.PriorityEnum;
+import com.klayrocha.helpdesk.api.enums.StatusEnum;
 import com.klayrocha.helpdesk.api.model.ChangeStatus;
 import com.klayrocha.helpdesk.api.model.Ticket;
 
@@ -25,15 +27,15 @@ public interface TicketService {
 
 	Page<Ticket> findByCurrentUser(int page, int count, Long userId);
 
-	Page<Ticket> findByParameters(int page, int count, String title, String status, String priority);
+	Page<Ticket> findByParameters(int page, int count, String title, StatusEnum status, PriorityEnum priority);
 
-	Page<Ticket> findByParametersAndCurrentUser(int page, int count, String title, String status, String priority,
+	Page<Ticket> findByParametersAndCurrentUser(int page, int count, String title, StatusEnum status, PriorityEnum priority,
 			Long userId);
 
 	Page<Ticket> findByNumber(int page, int count, Integer number);
 
 	Iterable<Ticket> findAll();
 
-	public Page<Ticket> findByParametersAndAssignedUser(int page, int count, String title, String status,
-			String priority, Long assignedUserId);
+	public Page<Ticket> findByParametersAndAssignedUser(int page, int count, String title, StatusEnum status,
+			PriorityEnum priority, Long assignedUserId);
 }

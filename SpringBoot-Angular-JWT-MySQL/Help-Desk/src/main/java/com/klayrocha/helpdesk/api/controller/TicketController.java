@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.klayrocha.helpdesk.api.dto.Summary;
+import com.klayrocha.helpdesk.api.enums.PriorityEnum;
 import com.klayrocha.helpdesk.api.enums.ProfileEnum;
 import com.klayrocha.helpdesk.api.enums.StatusEnum;
 import com.klayrocha.helpdesk.api.model.ChangeStatus;
@@ -204,13 +205,13 @@ public class TicketController {
 			if (userRequest.getProfile().equals(ProfileEnum.ROLE_TECHNICIAN)) {
 			
 				if (assigned) {
-					tickets = ticketService.findByParametersAndAssignedUser(page, count, title, status, priority, userRequest.getId());
+					tickets = ticketService.findByParametersAndAssignedUser(page, count, title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority), userRequest.getId());
 				} else {
-					tickets = ticketService.findByParameters(page, count, title, status, priority);
+					tickets = ticketService.findByParameters(page, count, title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority));
 				}
 				
 			} else if (userRequest.getProfile().equals(ProfileEnum.ROLE_CUSTOMER)) {
-				tickets = ticketService.findByParametersAndCurrentUser(page, count, title, status, priority, userRequest.getId());
+				tickets = ticketService.findByParametersAndCurrentUser(page, count, title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority), userRequest.getId());
 			}
 		}
 		response.setData(tickets);
@@ -334,7 +335,7 @@ public class TicketController {
 	}
 
 	private void validateChangeStatus(Long id, String status, BindingResult result) {
-		if (id == null || id.equals("")) {
+		if (id == null || id == 0) {
 			result.addError(new ObjectError("Ticket", "Id no information"));
 			return;
 		}

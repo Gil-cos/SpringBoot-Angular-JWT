@@ -43,10 +43,8 @@ public class Ticket {
 	private String image;
 
 	@Transient
-	@ElementCollection(targetClass=ChangeStatus.class)
+	@ElementCollection(targetClass = ChangeStatus.class)
 	private List<ChangeStatus> changes;
-	
-	
 
 	public Long getId() {
 		return id;
@@ -136,7 +134,4 @@ public class Ticket {
 		this.changes = changes;
 	}
 
-	
-	
-	
 }

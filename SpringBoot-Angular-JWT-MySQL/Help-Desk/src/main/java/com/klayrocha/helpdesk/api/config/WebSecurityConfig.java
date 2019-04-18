@@ -1,4 +1,4 @@
-package com.klayrocha.helpdesk.api.security.config;
+package com.klayrocha.helpdesk.api.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
