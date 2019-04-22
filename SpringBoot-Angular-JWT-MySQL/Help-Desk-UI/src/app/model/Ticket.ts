@@ -17,6 +17,5 @@ export class Ticket {
     public equals(obj: Ticket): boolean {
         return this.number === obj.number;
     }
-    
 
 }

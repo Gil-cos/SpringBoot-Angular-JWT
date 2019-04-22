@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.klayrocha.helpdesk.api.model.User;
+import com.klayrocha.helpdesk.api.entity.User;
+import com.klayrocha.helpdesk.api.enums.StatusEnum;
 import com.klayrocha.helpdesk.api.response.Response;
 import com.klayrocha.helpdesk.api.service.UserService;
 
@@ -36,6 +37,7 @@ public class UserController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 
 	@PostMapping()
 	@PreAuthorize("hasAnyRole('ADMIN')")

@@ -2,7 +2,7 @@ package com.klayrocha.helpdesk.api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.klayrocha.helpdesk.api.model.User;
+import com.klayrocha.helpdesk.api.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import com.klayrocha.helpdesk.api.model.User;
+import com.klayrocha.helpdesk.api.entity.User;
 
 @Component
 public interface UserService {

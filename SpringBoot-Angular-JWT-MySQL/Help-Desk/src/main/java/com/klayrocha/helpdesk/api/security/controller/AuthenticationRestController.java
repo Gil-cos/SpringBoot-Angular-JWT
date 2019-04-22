@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.klayrocha.helpdesk.api.model.User;
+import com.klayrocha.helpdesk.api.entity.User;
 import com.klayrocha.helpdesk.api.security.jwt.JwtAuthenticationRequest;
 import com.klayrocha.helpdesk.api.security.jwt.JwtTokenUtil;
 import com.klayrocha.helpdesk.api.security.model.CurrentUser;

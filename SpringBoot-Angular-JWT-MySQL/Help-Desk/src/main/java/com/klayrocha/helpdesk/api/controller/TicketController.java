@@ -26,12 +26,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.klayrocha.helpdesk.api.dto.Summary;
+import com.klayrocha.helpdesk.api.entity.ChangeStatus;
+import com.klayrocha.helpdesk.api.entity.Ticket;
+import com.klayrocha.helpdesk.api.entity.User;
 import com.klayrocha.helpdesk.api.enums.PriorityEnum;
 import com.klayrocha.helpdesk.api.enums.ProfileEnum;
 import com.klayrocha.helpdesk.api.enums.StatusEnum;
-import com.klayrocha.helpdesk.api.model.ChangeStatus;
-import com.klayrocha.helpdesk.api.model.Ticket;
-import com.klayrocha.helpdesk.api.model.User;
 import com.klayrocha.helpdesk.api.response.Response;
 import com.klayrocha.helpdesk.api.security.jwt.JwtTokenUtil;
 import com.klayrocha.helpdesk.api.service.TicketService;
@@ -205,13 +205,13 @@ public class TicketController {
 			if (userRequest.getProfile().equals(ProfileEnum.ROLE_TECHNICIAN)) {
 			
 				if (assigned) {
-					tickets = ticketService.findByParametersAndAssignedUser(page, count, title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority), userRequest.getId());
+					tickets = ticketService.findByParametersAndAssignedUser(page, count, title, status, priority, userRequest.getId());
 				} else {
-					tickets = ticketService.findByParameters(page, count, title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority));
+					tickets = ticketService.findByParameters(page, count, title, status, priority);
 				}
 				
 			} else if (userRequest.getProfile().equals(ProfileEnum.ROLE_CUSTOMER)) {
-				tickets = ticketService.findByParametersAndCurrentUser(page, count, title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority), userRequest.getId());
+				tickets = ticketService.findByParametersAndCurrentUser(page, count, title, status, priority, userRequest.getId());
 			}
 		}
 		response.setData(tickets);
@@ -335,7 +335,7 @@ public class TicketController {
 	}
 
 	private void validateChangeStatus(Long id, String status, BindingResult result) {
-		if (id == null || id == 0) {
+		if (id == null) {
 			result.addError(new ObjectError("Ticket", "Id no information"));
 			return;
 		}

@@ -1,16 +1,16 @@
-package com.klayrocha.helpdesk.api.model;
+package com.klayrocha.helpdesk.api.entity;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import org.springframework.data.annotation.Transient;
+import javax.persistence.Transient;
 
 import com.klayrocha.helpdesk.api.enums.PriorityEnum;
 import com.klayrocha.helpdesk.api.enums.StatusEnum;
@@ -19,7 +19,7 @@ import com.klayrocha.helpdesk.api.enums.StatusEnum;
 public class Ticket {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
@@ -41,9 +41,8 @@ public class Ticket {
 	private String description;
 
 	private String image;
-
+	
 	@Transient
-	@ElementCollection(targetClass = ChangeStatus.class)
 	private List<ChangeStatus> changes;
 
 	public Long getId() {

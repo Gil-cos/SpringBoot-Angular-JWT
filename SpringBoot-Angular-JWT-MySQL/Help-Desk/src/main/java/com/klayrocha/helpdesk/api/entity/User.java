@@ -1,4 +1,4 @@
-package com.klayrocha.helpdesk.api.model;
+package com.klayrocha.helpdesk.api.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

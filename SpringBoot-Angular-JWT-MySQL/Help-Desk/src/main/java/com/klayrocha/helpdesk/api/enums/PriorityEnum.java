@@ -12,7 +12,7 @@ public enum PriorityEnum {
 		case "Low":
 			return Low;
 		default:
-			return null;
+			return High;
 		}
 	}
 }

@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import com.klayrocha.helpdesk.api.entity.User;
 import com.klayrocha.helpdesk.api.enums.ProfileEnum;
-import com.klayrocha.helpdesk.api.model.User;
 
 public class JwtUserFactory {
 	 private JwtUserFactory() {

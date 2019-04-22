@@ -8,10 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import com.klayrocha.helpdesk.api.entity.ChangeStatus;
+import com.klayrocha.helpdesk.api.entity.Ticket;
 import com.klayrocha.helpdesk.api.enums.PriorityEnum;
 import com.klayrocha.helpdesk.api.enums.StatusEnum;
-import com.klayrocha.helpdesk.api.model.ChangeStatus;
-import com.klayrocha.helpdesk.api.model.Ticket;
 import com.klayrocha.helpdesk.api.repository.ChangeStatusRepository;
 import com.klayrocha.helpdesk.api.repository.TicketRepository;
 import com.klayrocha.helpdesk.api.service.TicketService;
@@ -59,19 +59,19 @@ public class TicketServiceImpl implements TicketService {
 		return this.changeStatusRepository.findByTicketIdOrderByDateChangeStatusDesc(ticketId);
 	}
 
-	public Page<Ticket> findByParameters(int page, int count, String title, StatusEnum status, PriorityEnum priority) {
+	public Page<Ticket> findByParameters(int page, int count, String title, String status, String priority) {
 		Pageable pages = PageRequest.of(page, count);
 		return this.ticketRepository
-				.findByTitleIgnoreCaseContainingAndStatusContainingAndPriorityContainingOrderByDateDesc(title, status,
-						priority, pages);
+				.findByTitleIgnoreCaseContainingAndStatusAndPriorityOrderByDateDesc(
+						title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority), pages);
 	}
 
-	public Page<Ticket> findByParametersAndCurrentUser(int page, int count, String title, StatusEnum status,
-			PriorityEnum priority, Long userId) {
+	public Page<Ticket> findByParametersAndCurrentUser(int page, int count, String title, String status,
+			String priority, Long userId) {
 		Pageable pages = PageRequest.of(page, count);
 		return this.ticketRepository
-				.findByTitleIgnoreCaseContainingAndStatusContainingAndPriorityContainingAndUserIdOrderByDateDesc(title,
-						status, priority, userId, pages);
+				.findByTitleIgnoreCaseContainingAndStatusAndPriorityAndUserIdOrderByDateDesc(
+						title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority), userId, pages);
 	}
 
 	public Page<Ticket> findByNumber(int page, int count, Integer number) {
@@ -79,11 +79,11 @@ public class TicketServiceImpl implements TicketService {
 		return this.ticketRepository.findByNumber(number, pages);
 	}
 
-	public Page<Ticket> findByParametersAndAssignedUser(int page, int count, String title, StatusEnum status,
-			PriorityEnum priority, Long assignedUserId) {
+	public Page<Ticket> findByParametersAndAssignedUser(int page, int count, String title, String status,
+			String priority, Long assignedUserId) {
 		Pageable pages = PageRequest.of(page, count);
 		return this.ticketRepository
-				.findByTitleIgnoreCaseContainingAndStatusContainingAndPriorityContainingAndAssignedUserIdOrderByDateDesc(
-						title, status, priority, assignedUserId, pages);
+				.findByTitleIgnoreCaseContainingAndStatusAndPriorityAndAssignedUserIdOrderByDateDesc(
+						title, StatusEnum.getStatus(status), PriorityEnum.getPriority(priority), assignedUserId, pages);
 	}
 }
