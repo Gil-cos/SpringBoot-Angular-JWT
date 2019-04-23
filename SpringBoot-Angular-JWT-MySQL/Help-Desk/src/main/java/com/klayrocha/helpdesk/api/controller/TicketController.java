@@ -1,5 +1,7 @@
 package com.klayrocha.helpdesk.api.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -29,7 +31,6 @@ import com.klayrocha.helpdesk.api.dto.Summary;
 import com.klayrocha.helpdesk.api.entity.ChangeStatus;
 import com.klayrocha.helpdesk.api.entity.Ticket;
 import com.klayrocha.helpdesk.api.entity.User;
-import com.klayrocha.helpdesk.api.enums.PriorityEnum;
 import com.klayrocha.helpdesk.api.enums.ProfileEnum;
 import com.klayrocha.helpdesk.api.enums.StatusEnum;
 import com.klayrocha.helpdesk.api.response.Response;
@@ -174,21 +175,16 @@ public class TicketController {
 		} else if (userRequest.getProfile().equals(ProfileEnum.ROLE_CUSTOMER)) {
 			tickets = ticketService.findByCurrentUser(page, count, userRequest.getId());
 		}
-		
+
 		response.setData(tickets);
 		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping(value = "{page}/{count}/{number}/{title}/{status}/{priority}/{assigned}")
 	@PreAuthorize("hasAnyRole('CUSTOMER','TECHNICIAN')")
-	public ResponseEntity<Response<Page<Ticket>>> findByParams(HttpServletRequest request, 
-			@PathVariable int page,
-			@PathVariable int count, 
-			@PathVariable Integer number, 
-			@PathVariable String title,
-			@PathVariable String status, 
-			@PathVariable String priority, 
-			@PathVariable boolean assigned) {
+	public ResponseEntity<Response<Page<Ticket>>> findByParams(HttpServletRequest request, @PathVariable int page,
+			@PathVariable int count, @PathVariable Integer number, @PathVariable String title,
+			@PathVariable String status, @PathVariable String priority, @PathVariable boolean assigned) {
 
 		title = title.equals("uninformed") ? "" : title;
 		status = status.equals("uninformed") ? "" : status;
@@ -201,28 +197,31 @@ public class TicketController {
 			tickets = ticketService.findByNumber(page, count, number);
 		} else {
 			User userRequest = userFromRequest(request);
-			
+
 			if (userRequest.getProfile().equals(ProfileEnum.ROLE_TECHNICIAN)) {
-			
+
 				if (assigned) {
-					tickets = ticketService.findByParametersAndAssignedUser(page, count, title, status, priority, userRequest.getId());
+					tickets = ticketService.findByParametersAndAssignedUser(page, count, title, status, priority,
+							userRequest.getId());
 				} else {
 					tickets = ticketService.findByParameters(page, count, title, status, priority);
 				}
-				
+
 			} else if (userRequest.getProfile().equals(ProfileEnum.ROLE_CUSTOMER)) {
-				tickets = ticketService.findByParametersAndCurrentUser(page, count, title, status, priority, userRequest.getId());
+				tickets = ticketService.findByParametersAndCurrentUser(page, count, title, status, priority,
+						userRequest.getId());
 			}
 		}
 		response.setData(tickets);
-		
+
 		return ResponseEntity.ok(response);
 	}
 
 	@PutMapping(value = "/{id}/{status}")
 	@PreAuthorize("hasAnyRole('CUSTOMER','TECHNICIAN')")
-	public ResponseEntity<Response<Ticket>> changeStatus(@PathVariable("id") Long id, @PathVariable("status") String status,
-			HttpServletRequest request, @RequestBody Ticket ticket, BindingResult result) {
+	public ResponseEntity<Response<Ticket>> changeStatus(@PathVariable("id") Long id,
+			@PathVariable("status") String status, HttpServletRequest request, @RequestBody Ticket ticket,
+			BindingResult result) {
 
 		Response<Ticket> response = new Response<Ticket>();
 
@@ -254,13 +253,13 @@ public class TicketController {
 			response.getErrors().add(e.getMessage());
 			return ResponseEntity.badRequest().body(response);
 		}
-		
+
 		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping(value = "/summary")
 	public ResponseEntity<Response<Summary>> findChart() {
-		
+
 		Response<Summary> response = new Response<Summary>();
 		Summary chart = new Summary();
 		int amountNew = 0;
@@ -301,7 +300,7 @@ public class TicketController {
 		chart.setAmountAssigned(amountAssigned);
 		chart.setAmountClosed(amountClosed);
 		response.setData(chart);
-		
+
 		return ResponseEntity.ok(response);
 	}
 
@@ -344,5 +343,4 @@ public class TicketController {
 			return;
 		}
 	}
-
 }
