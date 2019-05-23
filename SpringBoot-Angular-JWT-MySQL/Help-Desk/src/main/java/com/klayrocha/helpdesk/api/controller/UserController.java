@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.klayrocha.helpdesk.api.entity.User;
-import com.klayrocha.helpdesk.api.enums.StatusEnum;
 import com.klayrocha.helpdesk.api.response.Response;
 import com.klayrocha.helpdesk.api.service.UserService;
 

@@ -1,7 +1,5 @@
 package com.klayrocha.helpdesk.api.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;

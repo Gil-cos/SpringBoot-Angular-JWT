@@ -11,7 +11,7 @@ import com.klayrocha.helpdesk.api.security.jwt.JwtUserFactory;
 import com.klayrocha.helpdesk.api.service.UserService;
 
 @Service
-public class JwtUserDetailsServiceImpl  implements UserDetailsService {
+public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserService userService;

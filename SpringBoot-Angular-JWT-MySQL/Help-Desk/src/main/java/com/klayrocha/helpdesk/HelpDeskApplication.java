@@ -10,7 +10,6 @@ import com.klayrocha.helpdesk.api.entity.User;
 import com.klayrocha.helpdesk.api.enums.ProfileEnum;
 import com.klayrocha.helpdesk.api.repository.UserRepository;
 
-
 @SpringBootApplication
 public class HelpDeskApplication {
 
